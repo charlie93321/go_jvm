@@ -1,8 +1,10 @@
 package terminal
 
 import (
+	"encoding/json"
 	"fmt"
 	"go_jvm/classpath"
+	"go_jvm/view"
 	"os"
 	"strings"
 )
@@ -72,6 +74,12 @@ func StartJVM(c *Terminal) {
 		fmt.Printf("could't find or load main class %s\n", c.Class)
 		return
 	}
-	fmt.Printf("class data :%v\n", string(classData))
+	//fmt.Printf("class data :%v\n", string(classData))
 
+	cf, err := view.Parse(classData)
+	if err != nil {
+		panic(err)
+	}
+	data, err := json.Marshal(cf)
+	fmt.Println(string(data))
 }
